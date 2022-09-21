@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./utils/loader";
+import { getDocs } from "firebase/firestore";
 import Admin from "./admin";
+import { colRef } from "./storageconfig";
 import { verifyAccount } from "./utils/functions";
 const Splitusers = ({ usersList }) => {
   var [pendingList] = useState([]);
@@ -8,8 +10,13 @@ const Splitusers = ({ usersList }) => {
   var [rejectedList] = useState([]);
   var [verifiedList] = useState([]);
   var [spamList] = useState([]);
+  const [FrondID, setFrontID] = useState("");
+  const [BackID, setBackID] = useState("");
+  const [PicwithID, setPickWithID] = useState("");
+
   const [List, setList] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [showPic, showpic] = useState(false);
 
   const splitUsers = async () => {
     console.log(usersList);
@@ -29,6 +36,23 @@ const Splitusers = ({ usersList }) => {
         }
       }
       setList(true);
+    }
+  };
+
+  const PicofID = async (ID) => {
+    try {
+      const docsSnap = await getDocs(colRef);
+      docsSnap.forEach((doc) => {
+        if (doc.id == ID) {
+          setFrontID(doc.data().FrontID);
+          setBackID(doc.data().BackID);
+          setPickWithID(doc.data().PicWithID);
+          showpic(true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
     }
   };
 
@@ -64,150 +88,212 @@ const Splitusers = ({ usersList }) => {
 
   return (
     <>
-      <div style={{ background: "#000" }}>
-        <h1>New</h1>
-        {/* New Users Part*/}
-        {newList.length === 0 ? (
-          <p>No User Found</p>
-        ) : (
-          <div>
-            <ol>
-              {newList.map((newList) => (
-                <li>{newList}</li>
-              ))}
-            </ol>
-          </div>
-        )}
+      <div
+        style={{ background: "#000", display: "flex", flexDirection: "row" }}
+      >
+        {/* Left Half*/}
 
-        {/* Verified Users Part*/}
-        <h1>Verified</h1>
-        {verifiedList.length === 0 ? (
-          <p>No User Found</p>
-        ) : (
-          <div>
-            <ol>
-              {verifiedList.map((verifiedList) => (
-                <li>
-                  {verifiedList}{" "}
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(verifiedList, 0)}
-                  >
-                    Change to New
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+        <div style={{ width: "60%" }}>
+          <h1>New</h1>
+          {/* New Users Part*/}
+          {newList.length === 0 ? (
+            <p>No User Found</p>
+          ) : (
+            <div>
+              <ol>
+                {newList.map((newList) => (
+                  <li>{newList}</li>
+                ))}
+              </ol>
+            </div>
+          )}
 
-        {/* Spam Users Part*/}
-        <h1>Spam</h1>
-        {spamList.length === 0 ? (
-          <p>No User Found</p>
-        ) : (
-          <div>
-            <ol>
-              {spamList.map((spamList) => (
-                <li>
-                  {spamList}{" "}
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(verifiedList, 0)}
-                  >
-                    Change to New
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+          {/* Verified Users Part*/}
+          <h1>Verified</h1>
+          {verifiedList.length === 0 ? (
+            <p>No User Found</p>
+          ) : (
+            <div>
+              <ol>
+                {verifiedList.map((verifiedList) => (
+                  <li>
+                    {verifiedList}{" "}
+                    <button
+                      style={{
+                        width: 150,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(verifiedList, 0)}
+                    >
+                      Change to New
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
-        {/* Pending Users Part*/}
-        <h1>Pending</h1>
-        {pendingList.length === 0 ? (
-          <p>No User Found</p>
-        ) : (
-          <div>
-            <ol>
-              {pendingList.map((pendingList) => (
-                <li>
-                  {pendingList}{" "}
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(pendingList, 3)}
-                  >
-                    Verify
-                  </button>
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(verifiedList, 2)}
-                  >
-                    Reject
-                  </button>
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(verifiedList, 4)}
-                  >
-                    Spam
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+          {/* Spam Users Part*/}
+          <h1>Spam</h1>
+          {spamList.length === 0 ? (
+            <p>No User Found</p>
+          ) : (
+            <div>
+              <ol>
+                {spamList.map((spamList) => (
+                  <li>
+                    {spamList}{" "}
+                    <button
+                      style={{
+                        width: 150,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(spamList, 0)}
+                    >
+                      Change to New
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
-        {/* Rejected Users Part*/}
-        <h1>Rejected</h1>
-        {rejectedList.length === 0 ? (
-          <p>No User Found</p>
-        ) : (
-          <div>
-            <ol>
-              {rejectedList.map((rejectedList) => (
-                <li>
-                  {rejectedList}{" "}
-                  <button
-                    style={{
-                      width: 150,
-                      height: 30,
-                      backgroundColor: "#fff",
-                      borderRadius: 50,
-                    }}
-                    onClick={() => verifyUser(rejectedList, 3)}
-                  >
-                    verify
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+          {/* Pending Users Part*/}
+          <h1>Pending</h1>
+          {pendingList.length === 0 ? (
+            <p>No User Found</p>
+          ) : (
+            <div>
+              <ol>
+                {pendingList.map((pendingList) => (
+                  <li>
+                    {pendingList}{" "}
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(pendingList, 3)}
+                    >
+                      Verify
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(pendingList, 2)}
+                    >
+                      Reject
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(pendingList, 4)}
+                    >
+                      Spam
+                    </button>
+                    <div>
+                      <button
+                        style={{
+                          width: 150,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => PicofID(pendingList)}
+                      >
+                        Show pictures
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* Rejected Users Part*/}
+          <h1>Rejected</h1>
+          {rejectedList.length === 0 ? (
+            <p>No User Found</p>
+          ) : (
+            <div>
+              <ol>
+                {rejectedList.map((rejectedList) => (
+                  <li>
+                    {rejectedList}{" "}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+
+        {/* Right Side*/}
+
+        <div style={{ width: "40%" }}>
+          {showPic ? (
+            <div>
+              <div>
+              <h1>Pictures</h1>
+              <button
+                        style={{
+                          width: 150,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() =>showpic(false)}
+                      >
+                        Hide pictures
+                      </button>
+              </div>
+              <div>
+                <h1 style={{fontSize:25}}>Picture of the ID's front</h1>
+                <img
+                  src={FrondID}
+                  style={{ width: 300, height: 300 }}
+                  placeholder="blur"
+                  alt="Front ID"
+                />
+              </div>
+
+              <div>
+              <h1 style={{fontSize:25}}>Picture of the ID's back</h1>
+                <img
+                  src={BackID}
+                  style={{ width: 300, height: 300 }}
+                  alt="Back ID"
+                />
+              </div>
+
+              <div>
+              <h1 style={{fontSize:25}}>Picture with the ID</h1>
+                <img
+                  src={PicwithID}
+                  style={{ width: 300, height: 300 }}
+                  alt="Picture With ID"
+                />
+              </div>
+
+
+            </div>
+          ) : (
+            <h1></h1>
+          )}
+        </div>
       </div>
     </>
   );
