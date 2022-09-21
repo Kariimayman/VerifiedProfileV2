@@ -54,8 +54,7 @@ const App = function AppWrapper() {
             </Nav.Item>
           </Nav>
           <div> <h1>VProfile</h1></div>
-          <main style={{      backgroundColor: "black",
-}}>
+          <main>
           {isAdmin()? (
             <Admin/>
           ): 

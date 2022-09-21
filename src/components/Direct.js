@@ -36,7 +36,7 @@ const Direct = ({ID}) => {
   {
     return (
       <>
-      <h1 align="middle"> {ID} is marked as a spam account</h1>
+      <h1 align="middle" style={{height:"100vh"}}> {ID} is marked as a spam account</h1>
       </>
     );
   }
@@ -44,7 +44,7 @@ const Direct = ({ID}) => {
   {
     return (
       <>
-      <h1 align="middle"> {ID} is Pending Verification</h1>
+      <h1 align="middle" style={{height:"100vh"}}> {ID} is Pending Verification</h1>
       </>
     );
   }
@@ -52,7 +52,7 @@ const Direct = ({ID}) => {
   {
     return (
       <>
-      <h1 align="middle"> {ID} is verified successfully</h1> <Checkmark size={'large'} />
+      <h1 align="middle" style={{height:"100vh"}}> {ID} is verified successfully</h1> <Checkmark size={'large'} />
       </>
     );
   }
@@ -60,7 +60,7 @@ const Direct = ({ID}) => {
   {
     return (
       <>
-      <h1 align="middle"> {ID} Verification Rejected</h1>
+      <h1 align="middle" > {ID} Verification Rejected</h1>
       <Form userID = {ID}/>
       </>
     );

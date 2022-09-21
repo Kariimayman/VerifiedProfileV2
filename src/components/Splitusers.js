@@ -10,6 +10,10 @@ const Splitusers = ({ usersList }) => {
   var [rejectedList] = useState([]);
   var [verifiedList] = useState([]);
   var [spamList] = useState([]);
+
+  const [IDofuser, setUserID] = useState("");
+
+
   const [FrondID, setFrontID] = useState("");
   const [BackID, setBackID] = useState("");
   const [PicwithID, setPickWithID] = useState("");
@@ -40,6 +44,7 @@ const Splitusers = ({ usersList }) => {
   };
 
   const PicofID = async (ID) => {
+    setUserID(ID)
     try {
       const docsSnap = await getDocs(colRef);
       docsSnap.forEach((doc) => {
@@ -232,9 +237,7 @@ const Splitusers = ({ usersList }) => {
             <div>
               <ol>
                 {rejectedList.map((rejectedList) => (
-                  <li>
-                    {rejectedList}{" "}
-                  </li>
+                  <li>{rejectedList} </li>
                 ))}
               </ol>
             </div>
@@ -243,25 +246,12 @@ const Splitusers = ({ usersList }) => {
 
         {/* Right Side*/}
 
-        <div style={{ width: "40%" }}>
+        <div style={{ width: "40%", color: "black" }}>
           {showPic ? (
-            <div>
-              <div>
-              <h1>Pictures</h1>
-              <button
-                        style={{
-                          width: 150,
-                          height: 30,
-                          backgroundColor: "#fff",
-                          borderRadius: 50,
-                        }}
-                        onClick={() =>showpic(false)}
-                      >
-                        Hide pictures
-                      </button>
-              </div>
-              <div>
-                <h1 style={{fontSize:25}}>Picture of the ID's front</h1>
+            <div style={{ backgroundColor: "#98AFC7	", paddingLeft: 120 , paddingBottom: 50,paddingTop: 50 }}>
+              <h1 style={{ paddingLeft: "2vw" }}>Pictures of {IDofuser}</h1>
+              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+                <h1 style={{ fontSize: 25 }}>Picture of the ID's front</h1>
                 <img
                   src={FrondID}
                   style={{ width: 300, height: 300 }}
@@ -269,26 +259,34 @@ const Splitusers = ({ usersList }) => {
                   alt="Front ID"
                 />
               </div>
-
-              <div>
-              <h1 style={{fontSize:25}}>Picture of the ID's back</h1>
+              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+                <h1 style={{ fontSize: 25 }}>Picture of the ID's back</h1>
                 <img
                   src={BackID}
                   style={{ width: 300, height: 300 }}
                   alt="Back ID"
                 />
               </div>
-
-              <div>
-              <h1 style={{fontSize:25}}>Picture with the ID</h1>
+              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+                <h1 style={{ fontSize: 25 }}>Picture with the ID</h1>
                 <img
                   src={PicwithID}
                   style={{ width: 300, height: 300 }}
                   alt="Picture With ID"
                 />
               </div>
-
-
+              <button
+                style={{
+                  width: 300,
+                  height: 50,
+                  backgroundColor: "#fff",
+                  borderRadius: 50,
+                  fontSize: 20,
+                }}
+                onClick={() => showpic(false)}
+              >
+                Hide pictures
+              </button>
             </div>
           ) : (
             <h1></h1>
