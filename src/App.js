@@ -37,11 +37,9 @@ const App = function AppWrapper() {
   return (
     <>
     <div style={{       
-      background: "#000",
+      backgroundColor: "black",
       backgroundPosition: 'center',
       backgroundSize: 'cover',
-      width: '100vw',
-      height: '100vh',
       color:"white" }}>
       {account.accountId ? (
         <Container fluid="md">
@@ -56,7 +54,8 @@ const App = function AppWrapper() {
             </Nav.Item>
           </Nav>
           <div> <h1>VProfile</h1></div>
-          <main>
+          <main style={{      backgroundColor: "black",
+}}>
           {isAdmin()? (
             <Admin/>
           ): 
