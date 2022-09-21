@@ -11,6 +11,8 @@ const Form = ({ userID }) => {
   const [ID] = useState(userID);
   const [loading, setLoading] = useState(false);
   const [showform, setForm] = useState(true);
+  var [Files] = useState([]);
+
   var [urls] = useState([]);
 
   const addVerification = async (userId) => {
@@ -33,19 +35,7 @@ const Form = ({ userID }) => {
     }
     else 
     {
-    const storageRef = ref(storage, `/files/${userID} frontID`);
-    const uploadTask = uploadBytesResumable(storageRef, Newfile);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (err) => console.log(err),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          urls[0] = url;
-        });
-      }
-    );
+      Files[0] = Newfile
   }
 }
   function handleBackID(e) {
@@ -57,19 +47,7 @@ const Form = ({ userID }) => {
     }
     else 
     {
-    const storageRef = ref(storage, `/files/${userID} BackID`);
-    const uploadTask = uploadBytesResumable(storageRef, Newfile);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (err) => console.log(err),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          urls[1] = url;
-        });
-      }
-    );
+      Files[1]= Newfile
   }
 }
   function handlePicWithID(e) {
@@ -81,8 +59,17 @@ const Form = ({ userID }) => {
     }
     else 
     {
-    const storageRef = ref(storage, `/files/${userID} PicWithID`);
-    const uploadTask = uploadBytesResumable(storageRef, Newfile);
+      Files[2]=Newfile
+    }
+  }
+
+  const upload = async () => {
+    for(let i = 0 ; i < Files.length;i++)
+    {
+    var IDS = ""
+    if(i===0){IDS = "Front ID"}else if(i===1){IDS = "Back ID"}else if(i===2){IDS="Pic With ID"}
+    const storageRef = ref(storage, `/files/${userID} ` + IDS);
+    const uploadTask = uploadBytesResumable(storageRef, Files[i]);
     uploadTask.on(
       "state_changed",
       (snapshot) => {},
@@ -90,14 +77,21 @@ const Form = ({ userID }) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log(url);
-          urls[2] = url;
+          urls[i] = url;
         });
       }
     );
     }
   }
 
+
   const submit = async () => {
+    if(Files.length != 3)
+    {
+      alert("You Must Upload 3 Pictures")
+    }
+    else{
+    await upload()
     console.log(urls);
     if(urls.length === 3)
     {
@@ -108,6 +102,10 @@ const Form = ({ userID }) => {
       });
       addVerification(ID);
     }
+    else{
+      alert("Please Wait \n Files are being uploaded")
+    }
+  }
   };
   const style = {
     padding: "10px",
