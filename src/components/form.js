@@ -86,7 +86,7 @@ const Form = ({ userID }) => {
 
 
   const submit = async () => {
-    if(Files.length != 3)
+    if(Files.length !== 3)
     {
       alert("You Must Upload 3 Pictures")
     }
