@@ -5,7 +5,7 @@ import Cover from "./components/utils/Cover";
 import Wallet from "./components/Wallet";
 import coverImg from "./cover.png";
 import "./App.css";
-import Functions from "./components/Functions"
+import Account from "./components/CreateAccount"
 import Admin from "./components/admin"
 
 const App = function AppWrapper() {
@@ -17,8 +17,6 @@ const App = function AppWrapper() {
 
   function isAdmin(){
     for(let i = 0; i<adminList.length;i++){
-      console.log("ID : " + account.accountId)
-      console.log("Admin : " + adminList[i])
       if(account.accountId === adminList[i]){
         return true
       }
@@ -63,7 +61,7 @@ const App = function AppWrapper() {
             <Admin/>
           ): 
             (
-              <Functions/>
+              <Account/>
             )
           }
           </main>

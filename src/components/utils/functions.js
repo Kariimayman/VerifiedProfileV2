@@ -13,6 +13,10 @@ export  function verificationType(ID) {
   return window.contract.verificationPerUser({ accountID :  ID});
 }
 
+export  function checkAccount(ID) {
+  return window.contract.accountExist({ accountID :  ID});
+}
+
 export async function changeToPending(ID){
   await window.contract.changeToPending({accountID : ID} ,GAS); 
 }
