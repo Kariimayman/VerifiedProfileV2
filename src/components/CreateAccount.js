@@ -12,7 +12,6 @@ const Account = () => {
   const [profileExist, setaccount] = useState(true);
   const CheckIfExist = async()=> {
     try {
-      console.log("checking account")
       setLoading(true);
       setaccount( await (checkAccount(userId)));
       setLoading(false);
