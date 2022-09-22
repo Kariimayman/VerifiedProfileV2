@@ -22,7 +22,6 @@ const Splitusers = ({ usersList }) => {
   const [showPic, showpic] = useState(false);
 
   const splitUsers = async () => {
-    console.log(usersList);
     if (usersList.length !== 0) {
       for (let i = 0; i < usersList.length; i++) {
         var user = usersList[i].split(",");
@@ -47,7 +46,7 @@ const Splitusers = ({ usersList }) => {
     try {
       const docsSnap = await getDocs(colRef);
       docsSnap.forEach((doc) => {
-        if (doc.id == ID) {
+        if (doc.id === ID) {
           setFrontID(doc.data().FrontID);
           setBackID(doc.data().BackID);
           setPickWithID(doc.data().PicWithID);
@@ -124,7 +123,7 @@ const Splitusers = ({ usersList }) => {
                     {verifiedList}{" "}
                     <button
                       style={{
-                        width: 150,
+                        width: 130,
                         height: 30,
                         backgroundColor: "#fff",
                         borderRadius: 50,
@@ -132,6 +131,17 @@ const Splitusers = ({ usersList }) => {
                       onClick={() => verifyUser(verifiedList, 0)}
                     >
                       Change to New
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(verifiedList, 1)}
+                    >
+                      Pending
                     </button>
                     <button
                       style={{
@@ -198,7 +208,7 @@ const Splitusers = ({ usersList }) => {
                     {spamList}{" "}
                     <button
                       style={{
-                        width: 150,
+                        width: 130,
                         height: 30,
                         backgroundColor: "#fff",
                         borderRadius: 50,
@@ -206,6 +216,17 @@ const Splitusers = ({ usersList }) => {
                       onClick={() => verifyUser(spamList, 0)}
                     >
                       Change to New
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(spamList, 1)}
+                    >
+                      Pending
                     </button>
                     <button
                       style={{
@@ -351,6 +372,17 @@ const Splitusers = ({ usersList }) => {
                         backgroundColor: "#fff",
                         borderRadius: 50,
                       }}
+                      onClick={() => verifyUser(rejectedList, 1)}
+                    >
+                      Pending
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
                       onClick={() => verifyUser(rejectedList, 3)}
                     >
                       Verify
@@ -433,7 +465,7 @@ const Splitusers = ({ usersList }) => {
                 <img
                   src={PicwithID}
                   style={{ width: 300, height: 300 }}
-                  alt="Picture With ID"
+                  alt="Profile With ID"
                 />
               </div>
             </div>

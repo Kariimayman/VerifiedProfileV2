@@ -76,7 +76,6 @@ const Form = ({ userID , rejected}) => {
       (err) => console.log(err),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
           urls[i] = url;
         });
       }
@@ -92,7 +91,6 @@ const Form = ({ userID , rejected}) => {
     }
     else{
     await upload()
-    console.log(urls);
     if(urls.length === 3)
     {
       await setDoc(doc(colRef, ID), {

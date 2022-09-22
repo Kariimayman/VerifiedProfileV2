@@ -11,10 +11,9 @@ const Account = ({profileExist}) => {
   const createNewProfile = async()=> {
     try {
       setLoading(true);
-      if(profileExist == false)
+      if(profileExist === false)
       {
         await (createProfile());
-        console.log("Creating Profile");
       }
     } catch (error) {
       console.log(error);

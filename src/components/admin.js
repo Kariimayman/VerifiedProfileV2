@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./utils/loader";
-import { getusersList, verifyAccount } from "./utils/functions";
+import { getusersList } from "./utils/functions";
 import Splitusers from "./Splitusers"
 const Admin = () => {
 
@@ -8,17 +8,15 @@ const Admin = () => {
   
   const getUsers = async () => {
     try {
-      console.log("setting users");
       setUsers(await getusersList());
-      console.log(" done");
     } catch (error) {
       console.log(error);
     } finally {
     }
   };
 
-  useEffect(async() => {
-    await getUsers();    
+  useEffect(() => {
+     getUsers();    
   }, []);
 
   if(userList.length === 0)
