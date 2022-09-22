@@ -13,7 +13,6 @@ const Splitusers = ({ usersList }) => {
 
   const [IDofuser, setUserID] = useState("");
 
-
   const [FrondID, setFrontID] = useState("");
   const [BackID, setBackID] = useState("");
   const [PicwithID, setPickWithID] = useState("");
@@ -44,7 +43,7 @@ const Splitusers = ({ usersList }) => {
   };
 
   const PicofID = async (ID) => {
-    setUserID(ID)
+    setUserID(ID);
     try {
       const docsSnap = await getDocs(colRef);
       docsSnap.forEach((doc) => {
@@ -134,6 +133,53 @@ const Splitusers = ({ usersList }) => {
                     >
                       Change to New
                     </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(verifiedList, 2)}
+                    >
+                      Reject
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(verifiedList, 4)}
+                    >
+                      Spam
+                    </button>
+                    {!showPic ? (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => PicofID(verifiedList)}
+                      >
+                        Show pictures
+                      </button>
+                    ) : (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => showpic(false)}
+                      >
+                        Hide pictures
+                      </button>
+                    )}
                   </li>
                 ))}
               </ol>
@@ -161,6 +207,53 @@ const Splitusers = ({ usersList }) => {
                     >
                       Change to New
                     </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(spamList, 3)}
+                    >
+                      Verify
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(spamList, 2)}
+                    >
+                      Reject
+                    </button>
+                    {!showPic ? (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => PicofID(spamList)}
+                      >
+                        Show pictures
+                      </button>
+                    ) : (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => showpic(false)}
+                      >
+                        Hide pictures
+                      </button>
+                    )}
                   </li>
                 ))}
               </ol>
@@ -210,10 +303,10 @@ const Splitusers = ({ usersList }) => {
                     >
                       Spam
                     </button>
-                    <div>
+                    {!showPic ? (
                       <button
                         style={{
-                          width: 150,
+                          width: 120,
                           height: 30,
                           backgroundColor: "#fff",
                           borderRadius: 50,
@@ -222,7 +315,19 @@ const Splitusers = ({ usersList }) => {
                       >
                         Show pictures
                       </button>
-                    </div>
+                    ) : (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => showpic(false)}
+                      >
+                        Hide pictures
+                      </button>
+                    )}
                   </li>
                 ))}
               </ol>
@@ -237,7 +342,56 @@ const Splitusers = ({ usersList }) => {
             <div>
               <ol>
                 {rejectedList.map((rejectedList) => (
-                  <li>{rejectedList} </li>
+                  <li>
+                    {rejectedList}{" "}
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(rejectedList, 3)}
+                    >
+                      Verify
+                    </button>
+                    <button
+                      style={{
+                        width: 100,
+                        height: 30,
+                        backgroundColor: "#fff",
+                        borderRadius: 50,
+                      }}
+                      onClick={() => verifyUser(rejectedList, 4)}
+                    >
+                      Spam
+                    </button>
+                    {!showPic ? (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => PicofID(rejectedList)}
+                      >
+                        Show pictures
+                      </button>
+                    ) : (
+                      <button
+                        style={{
+                          width: 120,
+                          height: 30,
+                          backgroundColor: "#fff",
+                          borderRadius: 50,
+                        }}
+                        onClick={() => showpic(false)}
+                      >
+                        Hide pictures
+                      </button>
+                    )}
+                  </li>
                 ))}
               </ol>
             </div>
@@ -248,9 +402,16 @@ const Splitusers = ({ usersList }) => {
 
         <div style={{ width: "40%", color: "black" }}>
           {showPic ? (
-            <div style={{ backgroundColor: "#98AFC7	", paddingLeft: 120 , paddingBottom: 50,paddingTop: 50 }}>
+            <div
+              style={{
+                backgroundColor: "#98AFC7	",
+                paddingLeft: 120,
+                paddingBottom: 50,
+                paddingTop: 50,
+              }}
+            >
               <h1 style={{ paddingLeft: "2vw" }}>Pictures of {IDofuser}</h1>
-              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+              <div style={{ paddingTop: "3vh", paddingBottom: "5vh" }}>
                 <h1 style={{ fontSize: 25 }}>Picture of the ID's front</h1>
                 <img
                   src={FrondID}
@@ -259,7 +420,7 @@ const Splitusers = ({ usersList }) => {
                   alt="Front ID"
                 />
               </div>
-              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+              <div style={{ paddingTop: "3vh", paddingBottom: "5vh" }}>
                 <h1 style={{ fontSize: 25 }}>Picture of the ID's back</h1>
                 <img
                   src={BackID}
@@ -267,7 +428,7 @@ const Splitusers = ({ usersList }) => {
                   alt="Back ID"
                 />
               </div>
-              <div style={{ paddingTop: "3vh" , paddingBottom: "5vh"}}>
+              <div style={{ paddingTop: "3vh", paddingBottom: "5vh" }}>
                 <h1 style={{ fontSize: 25 }}>Picture with the ID</h1>
                 <img
                   src={PicwithID}
@@ -275,18 +436,6 @@ const Splitusers = ({ usersList }) => {
                   alt="Picture With ID"
                 />
               </div>
-              <button
-                style={{
-                  width: 300,
-                  height: 50,
-                  backgroundColor: "#fff",
-                  borderRadius: 50,
-                  fontSize: 20,
-                }}
-                onClick={() => showpic(false)}
-              >
-                Hide pictures
-              </button>
             </div>
           ) : (
             <h1></h1>

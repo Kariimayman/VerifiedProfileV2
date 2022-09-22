@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { changeToPending } from "./utils/functions";
 
-const Form = ({ userID }) => {
+const Form = ({ userID , rejected}) => {
   const [ID] = useState(userID);
   const [loading, setLoading] = useState(false);
   const [showform, setForm] = useState(true);
@@ -122,6 +122,9 @@ const Form = ({ userID }) => {
         >
           {showform ? (
             <div  align="middle" >
+              {rejected ? (
+                <h1>{ID} Has Been Rejected</h1>
+              ) : (<div></div>)}
               <div style={{fontSize: "35px"}}>
                 <p>To be verified successfully Please upload 3 Pictures</p>
               </div>

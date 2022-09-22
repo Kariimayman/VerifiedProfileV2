@@ -2,30 +2,19 @@ import React, {useState, useEffect} from "react";
 import Loader from "./utils/loader";
 import Direct from "./Direct"
 import {
-  checkAccount,
   createProfile,
 } from "./utils/functions";
 
-const Account = () => {
+const Account = ({profileExist}) => {
   const [userId] = useState(window.walletConnection.account().accountId);
   const [loading, setLoading] = useState(false);
-  const [profileExist, setaccount] = useState(true);
-  const CheckIfExist = async()=> {
-    try {
-      setLoading(true);
-      setaccount( await (checkAccount(userId)));
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }  
-  }
   const createNewProfile = async()=> {
     try {
       setLoading(true);
-      if(!profileExist)
+      if(profileExist == false)
       {
         await (createProfile());
+        console.log("Creating Profile");
       }
     } catch (error) {
       console.log(error);
@@ -33,8 +22,12 @@ const Account = () => {
       setLoading(false);
     }  
 };
-  useEffect(async() => {
-   await CheckIfExist().then(createNewProfile())
+  useEffect(() => {
+    let abortController = new AbortController();  
+    createNewProfile()
+    return () => {  
+    abortController.abort();  
+    }
   }, []);
 
 return (

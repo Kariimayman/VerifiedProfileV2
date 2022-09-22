@@ -20,15 +20,19 @@ const Direct = ({ID}) => {
       setLoading(false);
     }
   };
-  useEffect(async() => {
-    await Verification(ID)
+  useEffect(() => {
+    let abortController = new AbortController();  
+    Verification(ID)
+    return () => {  
+    abortController.abort();  
+    }
   }, []);
   if(!loading){
     if(vType === "New" )
   {
     return (
         <>
-        <Form userID = {ID}/>
+        <Form userID = {ID} rejected = {false}/>
         </>
       );
   }
@@ -60,8 +64,7 @@ const Direct = ({ID}) => {
   {
     return (
       <>
-      <h1 align="middle" > {ID} Verification Rejected</h1>
-      <Form userID = {ID}/>
+      <Form userID = {ID} rejected = {true}/>
       </>
     );
   }
